@@ -49,7 +49,7 @@ new fullpage("#fullpage", {
           opacity: 0,
         },
         {
-          width: "34%",
+          width: "30%",
           opacity: 1,
         }
       )
@@ -57,12 +57,12 @@ new fullpage("#fullpage", {
           ctbContainer,
           0.8,
           {
-            width: "34%",
+            width: "30%",
             height: 5,
           },
           {
-            height: "50%",
-            width: "34%",
+            height: "45%",
+            width: "30%",
           }
         )
         .fromTo(buyButton, 1, { opacity: 0 }, { opacity: 1 });
