@@ -1,5 +1,7 @@
 TweenMax.defaultEase = Linear.easeOut;
 
+const tl3 = new TimelineMax();
+
 new fullpage("#fullpage", {
   //options here
   autoScrolling: true,
@@ -9,7 +11,15 @@ new fullpage("#fullpage", {
     const title = section.querySelector("h1");
     const tl = new TimelineMax({ delay: 0.5 });
 
-    tl.fromTo(title, 0.5, { y: "50", opacity: 0 }, { y: "0", opacity: 1 });
+    if (destination.index !== 2)
+      tl.fromTo(title, 0.5, { y: "50", opacity: 0 }, { y: "0", opacity: 1 });
+    else
+      tl.fromTo(
+        title,
+        0.7,
+        { x: "-200%", opacity: 0 },
+        { x: "-50%", opacity: 1 }
+      );
 
     if (destination.index === 1) {
       const sneackers = document.querySelectorAll(".sneacker");
@@ -28,6 +38,8 @@ new fullpage("#fullpage", {
     } else if (destination.index === 2) {
       const ctbContainer = document.querySelector(".ctb");
 
+      const buyButton = document.querySelector("#buy-button");
+
       tl.fromTo(
         ctbContainer,
         0.5,
@@ -37,21 +49,39 @@ new fullpage("#fullpage", {
           opacity: 0,
         },
         {
-          width: "50%",
+          width: "34%",
           opacity: 1,
         }
-      ).fromTo(
-        ctbContainer,
-        0.8,
-        {
-          width: "50%",
-          height: 5,
-        },
-        {
-          height: "50%",
-          width: "50%",
-        }
-      );
+      )
+        .fromTo(
+          ctbContainer,
+          0.8,
+          {
+            width: "34%",
+            height: 5,
+          },
+          {
+            height: "50%",
+            width: "34%",
+          }
+        )
+        .fromTo(buyButton, 1, { opacity: 0 }, { opacity: 1 });
+
+      tl3.to(document.querySelector("#buy-button").children[0], 0.4, {
+        attr: { width: 220 },
+        ease: Power4.easeInOut,
+      });
+      tl3.to("text", 0.4, { fill: "#fff", ease: Linear.easeNone }, 0);
+      tl3.to("polyline, line", 0.4, { x: 14, ease: Power4.easeInOut }, 0);
+      tl3.to("line", 0.4, { attr: { x2: 3 }, ease: Power4.easeInOut }, 0);
+      tl3.reversed(true);
+
+      buyButton.addEventListener("mouseenter", doCoolStuff);
+      buyButton.addEventListener("mouseleave", doCoolStuff);
     }
   },
 });
+
+function doCoolStuff() {
+  tl3.reversed(!tl3.reversed());
+}
